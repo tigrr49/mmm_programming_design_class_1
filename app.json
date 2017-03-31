@@ -1,0 +1,1 @@
+{"name":"MMM Programming Design Class 1 - IMDB","repository":"https://github.com/tigrr49/mmm_programming_design_class_1","env":{"CLOUDINARY_CLOUD_NAME":{"required":true},"CLOUDINARY_API_KEY":{"required":true},"CLOUDINARY_API_SECRET":{"required":true},"ROLLBAR_ACCESS_TOKEN":{"required":true}}}

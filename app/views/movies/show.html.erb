@@ -1,0 +1,128 @@
+<div class="page-header">
+  <h3>Movie #<%= @movie.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Year</dt>
+      <dd><%= @movie.year %></dd>
+
+      <dt>Duration</dt>
+      <dd><%= @movie.duration %></dd>
+
+      <dt>Description</dt>
+      <dd><%= @movie.description %></dd>
+
+      <dt>Title</dt>
+      <dd><%= @movie.title %></dd>
+
+      <dt>Director</dt>
+      <dd>
+        <% if @movie.director.present? %>
+          <a href="/directors/<%= @movie.director_id %>">
+            <%= @movie.director.name %>
+          </a>
+        <% end %>
+      </dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/movies" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/movies/<%= @movie.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_movie/<%= @movie.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- A Movie has many castings -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Castings
+      </li>
+
+      <% @movie.castings.each do |casting| %>
+        <li class="list-group-item">
+          <a href="/castings/<%= casting.id %>">
+            <%= casting.movie_id %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/castings/<%= casting.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/castings/<%= casting.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_casting/<%= casting.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_casting" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for movie_id -->
+      <input type="hidden" name="movie_id" value="<%= @movie.id %>">
+
+      <!-- Label and input for actor_id -->
+      <div class="form-group">
+        <label for="actor_id" class="control-label">
+          Actor
+        </label>
+
+        <%= select_tag(:actor_id, options_from_collection_for_select(Actor.all, :id, :created_at), :class => "form-control") %>
+      </div>
+
+      <button class="btn btn-block btn-success">
+        Create Casting
+      </button>
+    </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- A Movie has many actors -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Actors
+      </li>
+
+      <% @movie.actors.each do |actor| %>
+        <li class="list-group-item">
+          <a href="/actors/<%= actor.id %>">
+            <%= actor.created_at %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/actors/<%= actor.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/actors/<%= actor.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_actor/<%= actor.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
